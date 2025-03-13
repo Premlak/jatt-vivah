@@ -88,23 +88,69 @@ export default function Home() {
               </p>
             </CardContent>
           </Card>
-          <Card className=" p-4 rounded-lg shadow-md">
-            <CardContent>
-              <div className="flex justify-center align-middle">
-                <h2 className="text-lg font-semibold mb-2 flex just">
-                  Follow Us On
-                </h2>
-              </div>
-              <div className="flex justify-center gap-4 text-xl items-center mx-auto">
-                <a
-                  href="https://www.facebook.com/profile.php?id=61574112716462"
-                  className="text-blue-500 hover:text-blue-700"
-                >
-                  <Facebook />
-                </a>
-              </div>
-            </CardContent>
-          </Card>
+          <Card className="p-4 rounded-lg shadow-md">
+  <CardContent>
+    <div className="flex justify-center align-middle">
+      <h2 className="text-lg font-semibold mb-2">Follow Us On</h2>
+    </div>
+    <div className="flex justify-center gap-4 text-xl items-center mx-auto">
+      <a
+        href="https://www.facebook.com/profile.php?id=61574112716462"
+        className="text-blue-500 hover:text-blue-700"
+      >
+        <Facebook />
+      </a>
+    </div>
+    <div className="flex flex-col items-center space-y-2 mt-4">
+      <span
+        className="text-green-500 hover:text-green-700 underline cursor-pointer"
+        onClick={() => {
+          toast("Redirecting");
+          router.push('/pricingpolicy');
+        }}
+      >
+        Pricing Policy
+      </span>
+      <span
+        className="text-red-500 hover:text-red-700 underline cursor-pointer"
+        onClick={() => {
+          toast("Redirecting");
+          router.push('/shippingpolicy');
+        }}
+      >
+        Shipping Policy
+      </span>
+      <span
+        className="text-purple-500 hover:text-purple-700 underline cursor-pointer"
+        onClick={() => {
+          toast("Redirecting");
+          router.push('/termsandconditions');
+        }}
+      >
+        Terms and Conditions
+      </span>
+      <span
+        className="text-orange-500 hover:text-orange-700 underline cursor-pointer"
+        onClick={() => {
+          toast("Redirecting");
+          router.push('/privacypolicy');
+        }}
+      >
+        Privacy Policy
+      </span>
+      <span
+        className="text-blue-500 hover:text-blue-700 underline cursor-pointer"
+        onClick={() => {
+          toast("Redirecting");
+          router.push('/refundpolicy');
+        }}
+      >
+        Cancellation/Refund Policy
+      </span>
+    </div>
+  </CardContent>
+</Card>
+
           <Card className=" p-4 rounded-lg shadow-md">
             <CardContent>
               <h2 className="text-lg font-semibold mb-2">Contact Us</h2>
