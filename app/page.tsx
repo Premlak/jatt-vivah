@@ -147,6 +147,24 @@ export default function Home() {
       >
         Cancellation/Refund Policy
       </span>
+      <span
+        className="text-blue-500 hover:text-blue-700 underline cursor-pointer"
+        onClick={() => {
+          toast("Redirecting");
+          router.push('/aboutus');
+        }}
+      >
+        About Us
+      </span>
+      <span
+        className="text-blue-500 hover:text-blue-700 underline cursor-pointer"
+        onClick={() => {
+          toast("Redirecting");
+          router.push('/contactus');
+        }}
+      >
+        Contact Us
+      </span>
     </div>
   </CardContent>
 </Card>
