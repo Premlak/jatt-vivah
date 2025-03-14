@@ -29,7 +29,7 @@ export default function ProfileForm() {
   const [employment, setEmployment] = useState("");
   const [salary, setSalary] = useState(10000);
   const [data,setData] = useState(false);
-  const [img, ] = useState(null);
+  const [img, setImg] = useState(null);
   const heightOptions = [
     "5'0",
     "5'2",
@@ -243,7 +243,7 @@ export default function ProfileForm() {
             </div>
             <div>
               <Label>Upload Image</Label>
-              <SingleImageDropzone value={img} onChange={} />
+              <SingleImageDropzone value={img} onChange={setImg} />
             </div>
             <Button
               type="submit"
