@@ -20,7 +20,7 @@ export default function Home() {
       const req = await fetch("/api/data", { method: "GET" });
       const data = await req.json();
   
-      if (isSignedIn && data.message === "Profile Not Found") {
+      if (data.message === "Profile Not Found") {
         toast("Please Complete Your Profile First");
         router.push("/dashboard");
         return;
