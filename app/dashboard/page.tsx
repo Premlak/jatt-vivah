@@ -29,7 +29,7 @@ export default function ProfileForm() {
   const [employment, setEmployment] = useState("");
   const [salary, setSalary] = useState(10000);
   const [data,setData] = useState(false);
-  const [img, setImg] = useState(null);
+  const [img, ] = useState(null);
   const heightOptions = [
     "5'0",
     "5'2",
@@ -53,51 +53,6 @@ export default function ProfileForm() {
     "Prive Job",
     "Farming",
   ];
-  const analyzeImage = async () => {
-    setDisable(true);
-    if (!img) return;
-    const image = new Image();
-    image.src = URL.createObjectURL(img);
-    image.onload = async () => {
-      const canvas = document.createElement("canvas");
-      const ctx = canvas.getContext("2d");
-      if (!ctx) return;
-      canvas.width = image.width;
-      canvas.height = image.height;
-      ctx.drawImage(image, 0, 0);
-      await Promise.all([
-        faceapi.nets.ssdMobilenetv1.loadFromUri(
-          "https://cdn.jsdelivr.net/gh/justadudewhohacks/face-api.js@master/weights"
-        ),
-        faceapi.nets.tinyFaceDetector.loadFromUri(
-          "https://cdn.jsdelivr.net/gh/justadudewhohacks/face-api.js@master/weights"
-        ),
-      ]);
-      const detections = await faceapi.detectAllFaces(
-        canvas,
-        new faceapi.TinyFaceDetectorOptions()
-      );
-      const hasFace = detections.length > 0;
-      const { data } = await Tesseract.recognize(image, "eng");
-      const cleanedText = data.text.replace(/[^a-zA-Z0-9]/g, "").trim();
-      const hasText = cleanedText.length >= 5;
-      if (!hasFace) {
-        toast("❌ No Face Detected. Re-upload A Photo With Clear Face & Background");
-        setDisable(false);
-        setImg(null);
-        return;
-      }
-      if (hasText && !hasFace) {
-        toast("❌ Watermark Or Text Detected. Re-upload A Photo With Clear Face & Background");
-        setDisable(false);
-        setImg(null);
-        return;
-      }
-      toast("✅ Image uploaded successfully.");
-      setDisable(false);
-    };
-    setDisable(false);
-  };
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (
@@ -288,7 +243,7 @@ export default function ProfileForm() {
             </div>
             <div>
               <Label>Upload Image</Label>
-              <SingleImageDropzone value={img} onChange={(file) => {setImg(file); if(file != undefined){analyzeImage();toast("Wait While Processing Image"); setDisable(true)}else{setDisable(false)}}} />
+              <SingleImageDropzone value={img} onChange={} />
             </div>
             <Button
               type="submit"
@@ -326,7 +281,7 @@ export default function ProfileForm() {
                   setMobile("");
                   setEmployment("");
                   setSalary(5000);
-                  setImg(null);
+                  (null);
                 }
               }}
               className="w-full text-lg font-semibold"
