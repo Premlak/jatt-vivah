@@ -56,10 +56,7 @@ export default function Home() {
   
   useEffect(() => {
     fetchData();
-  }, []);
-  
-  useEffect(() => {
-    fetchData();
+    toast("Log in to view the content if you haven't already");
   }, []);
   return (
     <>
