@@ -105,7 +105,7 @@ export default function Home() {
               </div>
             </CardContent>
           </Card>
-          <Card className=" p-4 rounded-lg shadow-md">
+{/*           <Card className=" p-4 rounded-lg shadow-md">
             <CardContent>
               <h2 className="text-lg font-semibold mb-2">Contact Us</h2>
               <p className="text-sm text-gray-400">
@@ -130,7 +130,7 @@ export default function Home() {
                 </a>
               </p>
             </CardContent>
-          </Card>
+          </Card> */}
         </div>
       </footer>
     </>
