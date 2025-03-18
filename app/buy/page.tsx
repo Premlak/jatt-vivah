@@ -1,82 +1,46 @@
 "use client";
 import * as React from "react";
-import Script from "next/script";
-import { toast } from "sonner";
-import { Button } from "@/components/ui/button";
+import { useUser } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
-declare global {
-  interface Window {
-    Razorpay: any;
-  }
-}
+import { Button } from "@/components/ui/button";
 export default function Home() {
+  const { user } = useUser(); 
   const router = useRouter();
-  const purchased = async() => {
-    toast("Payment Done. Don't Close The Page Until We Verify")
-    const req = await fetch("/api/buy", {
-        method: "GET",
-    });
-    const data = await req.json();
-    toast(data.message);
-    if(data.message == "Subscribed"){
-        router.push("/");
+  const userEmail = user?.primaryEmailAddress?.emailAddress;
+  React.useEffect(() => {
+    if (!userEmail) {
+      router.push("/");
     }
-  }
-  const handlePayment = async () => {
-    try {
-      toast("Wait While Redirecting to Payment Page");
-
-      const req = await fetch("/api/create-order", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ amount: 100 }),
-      });
-      const res = await req.json();
-      if(res.message == "Subscribed"){
-        toast("Subscribed. Wait While Redirecting");
-        router.push("/");
-      }
-      const options = {
-        key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
-        ammount: 300,
-        currency: "INR",
-        name: "Godara",
-        description: "Just Checking",
-        order_id: res.orderId,
-        handler: (res: any) => {
-          if(res){
-            toast("Wait While Processing");
-            purchased();
-          }
-        },
-        prefill: {
-          name: "Godara",
-          email: "premlakshaygodara@gmail.com",
-          contact: "+918307030976",
-        },
-        theme: {
-          color: "#3399cc",
-        },
-      };
-      const rzp1 = new window.Razorpay(options);
-      rzp1.open();
-    } catch (e) {
-      console.error(e);
-      toast("Payment Failed!");
+  }, [userEmail, router]);
+  const handleWhatsAppRedirect = () => {
+    if (userEmail) {
+      const message = `Kindly do not alter this message. Send as is: ${userEmail}`;
+      const whatsappLink = `https://wa.me/918570886733?text=${encodeURIComponent(message)}`;
+      window.open(whatsappLink, "_blank");
     }
   };
-
   return (
-    <>
-      <Script src="https://checkout.razorpay.com/v1/checkout.js" />
-      <div className="flex justify-center items-center mx-auto my-auto pt-20">
-            <p className="font-bold text-pretty">Subscription Will Be Valid For 90 Days</p>
-      </div>
-      <div className="flex justify-center items-center h-screen">
-        <Button onClick={handlePayment} className="w-64 text-lg">
-          Subscribe Now
-        </Button>
-      </div>
-    </>
+    <div className="flex flex-col items-center justify-center h-screen">
+      {userEmail ? (
+        <>
+          <img
+            src="/scanner.jpeg"
+            alt="QR Code Scanner"
+            className="w-1/2 h-auto mb-4"
+          />
+          <p className="font-bold text-center text-xl mb-4">
+            After scanning the QR code and making a payment of ₹300, click the button below to proceed.
+          </p>
+          <Button
+            onClick={handleWhatsAppRedirect}
+            className="w-64 text-lg bg-green-500 text-white"
+          >
+            Proceed via WhatsApp
+          </Button>
+        </>
+      ) : (
+        <p className="text-center font-bold text-xl">Redirecting to login...</p>
+      )}
+    </div>
   );
 }
